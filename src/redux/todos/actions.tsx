@@ -12,8 +12,6 @@ export function addTodo(newTodo: Todo): TodoActionTypes {
 export function deleteTodo(id: number): TodoActionTypes {
   return {
     type: DELETE_TODO,
-    meta: {
-      id,
-    },
+    payload: id,
   };
 }

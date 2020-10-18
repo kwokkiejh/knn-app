@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -40,9 +40,6 @@ const useStyles = makeStyles((theme) => ({
 
 const TodoList = (props: any) => {
   const classes = useStyles();
-  useEffect(() => {
-    console.log(props);
-  }, []);
 
   return (
     <div className={classes.root}>
@@ -90,7 +87,15 @@ const TodoList = (props: any) => {
           color="secondary"
           onClick={() => props.dispatch({ type: "ADD_TODO", payload: TODO_LIST })}
         >
-          Dispatch
+          Add Todo
+        </Button>
+        <Button
+          style={{ marginLeft: "4px" }}
+          variant="contained"
+          color="secondary"
+          onClick={() => props.dispatch({ type: "DELETE_TODO", payload: 1 })}
+        >
+          Delete Todo
         </Button>
         <Button
           style={{ marginLeft: "4px" }}

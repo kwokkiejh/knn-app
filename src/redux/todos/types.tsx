@@ -17,9 +17,7 @@ interface AddTodoAction {
 
 interface DeleteTodoAction {
   type: typeof DELETE_TODO;
-  meta: {
-    id: number;
-  };
+  payload: number;
 }
 
 export type TodoActionTypes = AddTodoAction | DeleteTodoAction;
