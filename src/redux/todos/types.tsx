@@ -1,25 +1,25 @@
 export interface Todo {
-    id: number,
-    message: String
-  }
-  
-export interface TodoState {
-    todos: Todo[],
+  id: number;
+  message: String;
 }
 
-export const ADD_TODO = 'ADD_TODO'
-export const DELETE_TODO = 'DELETE_TODO'
+export interface TodoState {
+  todos: Todo[];
+}
+
+export const ADD_TODO = "ADD_TODO";
+export const DELETE_TODO = "DELETE_TODO";
 
 interface AddTodoAction {
-  type: typeof ADD_TODO
-  payload: Todo
+  type: typeof ADD_TODO;
+  payload: Todo;
 }
 
 interface DeleteTodoAction {
-  type: typeof DELETE_TODO
+  type: typeof DELETE_TODO;
   meta: {
-    id: number
-  }
+    id: number;
+  };
 }
 
-export type TodoActionTypes = AddTodoAction | DeleteTodoAction
+export type TodoActionTypes = AddTodoAction | DeleteTodoAction;
