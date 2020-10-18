@@ -1,5 +1,5 @@
 import React from "react";
-import { Provider } from "react-redux"
+import { Provider } from "react-redux";
 import "./App.css";
 import TodoList from "./Container/TodoList";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
@@ -28,17 +28,17 @@ const themeLight = createMuiTheme({
   },
 });
 
-function App() {
+const App = (props: any) => {
   return (
     <Provider store={store}>
-    <div>
-      <MuiThemeProvider theme={themeLight}>
-        <CssBaseline />
-        <TodoList />
-      </MuiThemeProvider>
-    </div>
+      <div>
+        <MuiThemeProvider theme={themeLight}>
+          <CssBaseline />
+          <TodoList />
+        </MuiThemeProvider>
+      </div>
     </Provider>
   );
-}
+};
 
 export default App;
