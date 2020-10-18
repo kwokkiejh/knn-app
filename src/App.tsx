@@ -4,6 +4,7 @@ import "./App.css";
 import TodoList from "./Container/TodoList";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
+import { Provider } from 'react-redux';
 
 const themeLight = createMuiTheme({
   palette: {
