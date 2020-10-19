@@ -11,7 +11,7 @@ import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import { TODO_LIST } from "../constants";
-import { TodoState } from "../redux/todos/types";
+import { Todo, TodoState } from "../redux/todos/types";
 
 const drawerWidth = 240;
 
@@ -93,7 +93,11 @@ const TodoList = (props: any) => {
           style={{ marginLeft: "4px" }}
           variant="contained"
           color="secondary"
-          onClick={() => props.dispatch({ type: "DELETE_TODO", payload: 1 })}
+          onClick={() => {
+            props.dispatch({ type: "DELETE_TODO", payload: TODO_LIST[0].id });
+            console.log(TODO_LIST.filter((todo) => todo.id !== TODO_LIST[0].id));
+            console.log(props.todos.todo.todos[0].filter((todo: Todo) => todo.id !== TODO_LIST[0].id));
+          }}
         >
           Delete Todo
         </Button>
