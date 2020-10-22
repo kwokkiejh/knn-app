@@ -11,7 +11,9 @@ import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import { TODO_LIST } from "../constants";
-import { Todo, TodoState } from "../redux/todos/types";
+import { Todo, TodoState, TodoActionTypes } from "../redux/todos/types";
+import { Dispatch } from "redux";
+import { useDispatch } from "react-redux";
 
 const drawerWidth = 240;
 
@@ -38,8 +40,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+interface IProps {
+  todo: Todo;
+  addTodo: (todo: Todo) => void;
+}
+
 const TodoList = (props: any) => {
   const classes = useStyles();
+  const dispatch: Dispatch<any> = useDispatch();
+
+  //const plusTodo = React.useCallback((todo: Todo) => dispatch(props.addTodo(todo)), [dispatch, props.addTodo]);
 
   return (
     <div className={classes.root}>
@@ -85,7 +95,7 @@ const TodoList = (props: any) => {
         <Button
           variant="contained"
           color="secondary"
-          onClick={() => props.dispatch({ type: "ADD_TODO", payload: TODO_LIST })}
+          onClick={() => props.dispatch({ type: "ADD_TODO", payload: TODO_LIST[0] })}
         >
           Add Todo
         </Button>
@@ -96,7 +106,7 @@ const TodoList = (props: any) => {
           onClick={() => {
             props.dispatch({ type: "DELETE_TODO", payload: TODO_LIST[0].id });
             console.log(TODO_LIST.filter((todo) => todo.id !== TODO_LIST[0].id));
-            console.log(props.todos.todo.todos[0].filter((todo: Todo) => todo.id !== TODO_LIST[0].id));
+            console.log(props.todos.todo.todos.filter((todo: Todo) => todo.id !== TODO_LIST[0].id));
           }}
         >
           Delete Todo
