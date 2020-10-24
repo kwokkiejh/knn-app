@@ -4,6 +4,7 @@ import { TODO_LIST } from "../constants";
 import { RootState } from "../redux/store";
 import { addTodo, deleteTodo } from "../redux/todos/actions";
 import TodoCard from "../Component/TodoCard";
+import { Todo } from "../redux/todos/types";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -15,7 +16,7 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import { Todo } from "../redux/todos/types";
+import Box from "@material-ui/core/Box";
 
 const mapStateToProps = (state: RootState) => ({
   todos: state.todos,
@@ -57,6 +58,10 @@ const TodoList = (props: Props) => {
     return props.addTodo(todo);
   };
 
+  const handleDeleteTodo = (id: number) => {
+    return props.deleteTodo(id);
+  };
+
   return (
     <div className={classes.root}>
       <AppBar position="fixed" className={classes.appBar} elevation={1}>
@@ -94,11 +99,18 @@ const TodoList = (props: Props) => {
       </Drawer>
       <main className={classes.content}>
         <Toolbar />
-        <TodoCard id={1} message={"hello"} addTodo={(todo: Todo) => handleAddTodo(todo)} />
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-          magna aliqua.
-        </Typography>
+        <Box display="flex" justifyContent="flex-start" css={{ width: "100%" }}>
+          {TODO_LIST.map((todo: Todo, index: number) => (
+            <Box p={1} css={{ width: 360 }} key={index}>
+              <TodoCard
+                key={index}
+                todo={todo}
+                addTodo={(todo: Todo) => handleAddTodo(todo)}
+                deleteTodo={(id: number) => handleDeleteTodo(id)}
+              />
+            </Box>
+          ))}
+        </Box>
         <Button variant="contained" color="secondary" onClick={() => props.addTodo(TODO_LIST[0])}>
           Add Todo
         </Button>

@@ -1,6 +1,7 @@
 export interface Todo {
   id: number;
-  message: String;
+  title: string;
+  message: string;
 }
 
 export interface TodoState {
