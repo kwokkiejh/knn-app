@@ -15,7 +15,7 @@ import { addTodo, deleteTodo } from "../redux/todos/actions";
 import { RootState } from "../redux/store";
 
 const mapStateToProps = (state: RootState) => ({
-  todos: state.todo,
+  todos: state.todos,
 });
 
 const mapDispatchToProps = { addTodo, deleteTodo };

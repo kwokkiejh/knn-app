@@ -26,7 +26,7 @@ const themeLight = createMuiTheme({
   },
 });
 
-const App = (props: any) => {
+const App = () => {
   return (
     <div>
       <MuiThemeProvider theme={themeLight}>
