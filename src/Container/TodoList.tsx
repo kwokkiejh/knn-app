@@ -15,6 +15,7 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import { Todo } from "../redux/todos/types";
 
 const mapStateToProps = (state: RootState) => ({
   todos: state.todos,
@@ -51,6 +52,10 @@ const useStyles = makeStyles((theme) => ({
 
 const TodoList = (props: Props) => {
   const classes = useStyles();
+
+  const handleAddTodo = (todo: Todo) => {
+    return props.addTodo(todo);
+  };
 
   return (
     <div className={classes.root}>
@@ -89,7 +94,7 @@ const TodoList = (props: Props) => {
       </Drawer>
       <main className={classes.content}>
         <Toolbar />
-        <TodoCard />
+        <TodoCard id={1} message={"hello"} addTodo={(todo: Todo) => handleAddTodo(todo)} />
         <Typography paragraph>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
           magna aliqua.

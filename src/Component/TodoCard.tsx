@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { TODO_LIST } from "../constants";
+import { addTodo, deleteTodo } from "../redux/todos/actions";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -24,9 +26,20 @@ const useStyles = makeStyles({
   },
 });
 
-const TodoCard = () => {
+interface Props {
+  id: number;
+  message: String;
+  addTodo: typeof addTodo;
+}
+
+const TodoCard = (props: Props) => {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
+
+  useEffect(() => {
+    console.log(props.id);
+    props.addTodo(TODO_LIST[0]);
+  }, []);
 
   return (
     <Card className={classes.root} variant="outlined">
