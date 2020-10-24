@@ -11,9 +11,16 @@ import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import { TODO_LIST } from "../constants";
-import { Todo, TodoState, TodoActionTypes } from "../redux/todos/types";
-import { Dispatch } from "redux";
-import { useDispatch } from "react-redux";
+import { addTodo, deleteTodo } from "../redux/todos/actions";
+import { RootState } from "../redux/store";
+
+const mapStateToProps = (state: RootState) => ({
+  todos: state.todo,
+});
+
+const mapDispatchToProps = { addTodo, deleteTodo };
+
+type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
 const drawerWidth = 240;
 
@@ -40,16 +47,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-interface IProps {
-  todo: Todo;
-  addTodo: (todo: Todo) => void;
-}
-
-const TodoList = (props: any) => {
+const TodoList = (props: Props) => {
   const classes = useStyles();
-  const dispatch: Dispatch<any> = useDispatch();
-
-  //const plusTodo = React.useCallback((todo: Todo) => dispatch(props.addTodo(todo)), [dispatch, props.addTodo]);
 
   return (
     <div className={classes.root}>
@@ -92,11 +91,7 @@ const TodoList = (props: any) => {
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
           magna aliqua.
         </Typography>
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => props.dispatch({ type: "ADD_TODO", payload: TODO_LIST[0] })}
-        >
+        <Button variant="contained" color="secondary" onClick={() => props.addTodo(TODO_LIST[0])}>
           Add Todo
         </Button>
         <Button
@@ -104,9 +99,7 @@ const TodoList = (props: any) => {
           variant="contained"
           color="secondary"
           onClick={() => {
-            props.dispatch({ type: "DELETE_TODO", payload: TODO_LIST[0].id });
-            console.log(TODO_LIST.filter((todo) => todo.id !== TODO_LIST[0].id));
-            console.log(props.todos.todo.todos.filter((todo: Todo) => todo.id !== TODO_LIST[0].id));
+            props.deleteTodo(TODO_LIST[0].id);
           }}
         >
           Delete Todo
@@ -115,7 +108,7 @@ const TodoList = (props: any) => {
           style={{ marginLeft: "4px" }}
           variant="contained"
           color="secondary"
-          onClick={() => console.log(props.todos.todo.todos)}
+          onClick={() => console.log(props.todos)}
         >
           Get Todo State
         </Button>
@@ -124,8 +117,4 @@ const TodoList = (props: any) => {
   );
 };
 
-const mapStateToProps = (state: TodoState) => ({
-  todos: state,
-});
-
-export default connect(mapStateToProps)(TodoList);
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList);

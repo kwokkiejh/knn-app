@@ -1,10 +1,8 @@
 import React from "react";
-import { Provider } from "react-redux";
 import "./App.css";
 import TodoList from "./Container/TodoList";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import store from "./redux/store";
 
 const themeLight = createMuiTheme({
   palette: {
@@ -30,14 +28,12 @@ const themeLight = createMuiTheme({
 
 const App = (props: any) => {
   return (
-    <Provider store={store}>
-      <div>
-        <MuiThemeProvider theme={themeLight}>
-          <CssBaseline />
-          <TodoList />
-        </MuiThemeProvider>
-      </div>
-    </Provider>
+    <div>
+      <MuiThemeProvider theme={themeLight}>
+        <CssBaseline />
+        <TodoList />
+      </MuiThemeProvider>
+    </div>
   );
 };
 
