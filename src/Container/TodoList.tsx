@@ -21,28 +21,9 @@ const mapDispatchToProps = { addTodo, deleteTodo, addSelectedTodo, clearSelected
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
-const drawerWidth = 240;
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-  },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-  },
-  drawerPaper: {
-    width: drawerWidth,
-  },
-  drawerContainer: {
-    overflow: "auto",
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
   },
   todoTitle: {
     marginTop: 0,
