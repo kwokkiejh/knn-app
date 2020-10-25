@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { addTodo, deleteTodo, addSelectedTodo, clearSelectedTodo } from "../redux/todos/actions";
+import { addTodo } from "../redux/todos/actions";
 import { Todo } from "../redux/todos/types";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -7,12 +7,12 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import SaveOutlinedIcon from "@material-ui/icons/SaveOutlined";
 import DeleteForeverOutlinedIcon from "@material-ui/icons/DeleteForeverOutlined";
 import ClearOutlinedIcon from "@material-ui/icons/ClearOutlined";
+import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles({
   root: {},
@@ -52,16 +52,16 @@ const TodoCard = (props: Props) => {
 
   useEffect(() => {
     //console.log(props.addTodo(props.todoIndex));
-    console.log(props.disabledButton);
+    //console.log(props.disabledButton);
   }, []);
 
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>
-        <Box display="flex" justifyContent="flex-end" css={{ width: "100%" }}>
+        <Grid container justify="flex-end">
           {props.selectedTodoId === props.todoIndex.id ? (
             <>
-              <Box>
+              <Grid item xs={1}>
                 <IconButton
                   aria-label="edit"
                   size="small"
@@ -72,13 +72,13 @@ const TodoCard = (props: Props) => {
                 >
                   <DeleteForeverOutlinedIcon fontSize="small" />
                 </IconButton>
-              </Box>
-              <Box>
+              </Grid>
+              <Grid item xs={1}>
                 <IconButton aria-label="edit" size="small" color="secondary" onClick={() => {}}>
                   <SaveOutlinedIcon fontSize="small" />
                 </IconButton>
-              </Box>
-              <Box>
+              </Grid>
+              <Grid item xs={1}>
                 <IconButton
                   aria-label="edit"
                   size="small"
@@ -89,10 +89,10 @@ const TodoCard = (props: Props) => {
                 >
                   <ClearOutlinedIcon fontSize="small" />
                 </IconButton>
-              </Box>
+              </Grid>
             </>
           ) : (
-            <Box>
+            <Grid item xs={1}>
               <IconButton
                 aria-label="edit"
                 size="small"
@@ -103,9 +103,9 @@ const TodoCard = (props: Props) => {
               >
                 <EditOutlinedIcon fontSize="small" />
               </IconButton>
-            </Box>
+            </Grid>
           )}
-        </Box>
+        </Grid>
         <Box display="flex" justifyContent="flex-start" css={{ width: "100%" }}>
           <Box>
             <Typography className={classes.title} component="h2">

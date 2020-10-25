@@ -16,7 +16,6 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 
 const mapStateToProps = (state: RootState) => ({
@@ -59,7 +58,7 @@ const TodoList = (props: Props) => {
   const [selectedTodoId, setSelectedTodoId] = useState(-1);
 
   useEffect(() => {
-    TODO_LIST.map((todo: Todo, index: number) => props.addTodo(todo));
+    TODO_LIST.map((todo: Todo) => props.addTodo(todo));
   }, []);
 
   const handleIsDisabledButton = (todo: Todo) => {
@@ -148,11 +147,10 @@ const TodoList = (props: Props) => {
         >
           Get Todo State
         </Button>
-        <Grid container spacing={3}>
+        <Grid container spacing={1}>
           {props.todos.todos.map((todo: Todo, index: number) => (
             <Grid item xs={4} key={index}>
               <TodoCard
-                key={index}
                 todoIndex={todo}
                 addTodo={(todo: Todo) => props.addTodo(todo)}
                 deleteTodo={(id: number) => handleDeleteSelectedTodo(id)}
