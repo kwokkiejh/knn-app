@@ -11,7 +11,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
-import Grid from "@material-ui/core/Grid";
+import Avatar from "@material-ui/core/Avatar";
 
 const themeLight = createMuiTheme({
   palette: {
@@ -48,7 +48,7 @@ const themeLight = createMuiTheme({
   },
 });
 
-const drawerWidth = 240;
+const drawerWidth = 300;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -59,6 +59,7 @@ const useStyles = makeStyles((theme) => ({
     background: "#ffffff",
   },
   toolbarFont: {
+    marginLeft: 12,
     color: "#000",
     fontSize: 18,
     fontWeight: "bold",
@@ -92,46 +93,49 @@ const App = () => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <AppBar position="fixed" className={classes.appBar} elevation={0}>
-        <Toolbar>
-          <Typography className={classes.toolbarFont} variant="h6" noWrap>
-            Clipped drawer
-          </Typography>
-        </Toolbar>
-        <Divider />
-      </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="permanent"
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <Toolbar />
-        <div className={classes.drawerContainer}>
-          <List>
-            {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
+    <MuiThemeProvider theme={themeLight}>
+      <div className={classes.root}>
+        <AppBar position="fixed" className={classes.appBar} elevation={0}>
+          <Toolbar>
+            <Avatar alt="Ares Maltipoo" src="/iconic.png" />
+            <Typography className={classes.toolbarFont} variant="h6" noWrap>
+              Kwok N Niv
+            </Typography>
+          </Toolbar>
           <Divider />
-          <List>
-            {["All mail", "Trash", "Spam"].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
-        </div>
-      </Drawer>
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        <TodoList />
-      </main>
-    </div>
+        </AppBar>
+        <Drawer
+          className={classes.drawer}
+          variant="permanent"
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+        >
+          <Toolbar />
+          <div className={classes.drawerContainer}>
+            <List>
+              {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+                <ListItem button key={text}>
+                  <ListItemText primary={text} />
+                </ListItem>
+              ))}
+            </List>
+            <Divider />
+            <List>
+              {["All mail", "Trash", "Spam"].map((text, index) => (
+                <ListItem button key={text}>
+                  <ListItemText primary={text} />
+                </ListItem>
+              ))}
+            </List>
+          </div>
+        </Drawer>
+        <main className={classes.content}>
+          <div className={classes.toolbar} />
+          <TodoList />
+        </main>
+      </div>
+    </MuiThemeProvider>
   );
 };
 
