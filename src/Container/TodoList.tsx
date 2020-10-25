@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { TODO_LIST } from "../constants";
 import { RootState } from "../redux/store";
-import { addTodo, deleteTodo } from "../redux/todos/actions";
+import { addTodo, deleteTodo, addSelectedTodo, clearSelectedTodo } from "../redux/todos/actions";
 import TodoCard from "../Component/TodoCard";
 import { Todo } from "../redux/todos/types";
 
@@ -20,9 +20,10 @@ import Box from "@material-ui/core/Box";
 
 const mapStateToProps = (state: RootState) => ({
   todos: state.todos,
+  todo: state.todo,
 });
 
-const mapDispatchToProps = { addTodo, deleteTodo };
+const mapDispatchToProps = { addTodo, deleteTodo, addSelectedTodo, clearSelectedTodo };
 
 type Props = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
@@ -53,13 +54,23 @@ const useStyles = makeStyles((theme) => ({
 
 const TodoList = (props: Props) => {
   const classes = useStyles();
+  const [isEditable, setIsEditable] = useState(true);
+  const [selectedTodoId, setSelectedTodoId] = useState(-1);
 
-  const handleAddTodo = (todo: Todo) => {
-    return props.addTodo(todo);
+  const handleIsDisabledButton = (todo: Todo) => {
+    return !isEditable && todo !== props.todo.todo;
   };
 
-  const handleDeleteTodo = (id: number) => {
-    return props.deleteTodo(id);
+  const handleAddSelectedTodo = (todo: Todo) => {
+    props.addSelectedTodo(todo);
+    setIsEditable(false);
+    setSelectedTodoId(todo.id);
+  };
+
+  const handleClearSelectedTodo = () => {
+    props.clearSelectedTodo();
+    setIsEditable(true);
+    setSelectedTodoId(-1);
   };
 
   return (
@@ -104,9 +115,13 @@ const TodoList = (props: Props) => {
             <Box p={1} css={{ width: 360 }} key={index}>
               <TodoCard
                 key={index}
-                todo={todo}
-                addTodo={(todo: Todo) => handleAddTodo(todo)}
-                deleteTodo={(id: number) => handleDeleteTodo(id)}
+                todoIndex={todo}
+                addTodo={(todo: Todo) => props.addTodo(todo)}
+                deleteTodo={(id: number) => props.deleteTodo(id)}
+                addSelectedTodo={(todo: Todo) => handleAddSelectedTodo(todo)}
+                clearSelectedTodo={() => handleClearSelectedTodo()}
+                disabledButton={handleIsDisabledButton(todo)}
+                selectedTodoId={selectedTodoId}
               />
             </Box>
           ))}
@@ -128,7 +143,10 @@ const TodoList = (props: Props) => {
           style={{ marginLeft: "4px" }}
           variant="contained"
           color="secondary"
-          onClick={() => console.log(props.todos)}
+          onClick={() => {
+            console.log(props.todo);
+            console.log(props.todos);
+          }}
         >
           Get Todo State
         </Button>
