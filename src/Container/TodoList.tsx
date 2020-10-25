@@ -7,15 +7,7 @@ import TodoCard from "../Component/TodoCard";
 import { Todo } from "../redux/todos/types";
 
 import { makeStyles } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
 import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 import Grid from "@material-ui/core/Grid";
 
 const mapStateToProps = (state: RootState) => ({
@@ -83,86 +75,58 @@ const TodoList = (props: Props) => {
   };
 
   return (
-    <div className={classes.root}>
-      <AppBar position="fixed" className={classes.appBar} elevation={1}>
-        <Toolbar>
-          <Typography variant="h6" noWrap>
-            Clipped drawer
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="permanent"
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <Toolbar />
-        <div className={classes.drawerContainer}>
-          <List>
-            {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
-          <Divider />
-          <List>
-            {["All mail", "Trash", "Spam"].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
-        </div>
-      </Drawer>
-      <main className={classes.content}>
-        <Toolbar />
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={() => props.addTodo({ id: 4, title: "New todo", message: "Dynamically add new todo" })}
-        >
-          Add Todo
-        </Button>
-        <Button
-          style={{ marginLeft: "4px" }}
-          variant="contained"
-          color="secondary"
-          onClick={() => {
-            props.deleteTodo(TODO_LIST[0].id);
-          }}
-        >
-          Delete Todo
-        </Button>
-        <Button
-          style={{ marginLeft: "4px" }}
-          variant="contained"
-          color="secondary"
-          onClick={() => {
-            console.log(props.todo);
-            console.log(props.todos);
-          }}
-        >
-          Get Todo State
-        </Button>
-        <Grid container spacing={1}>
-          {props.todos.todos.map((todo: Todo, index: number) => (
-            <Grid item xs={4} key={index}>
-              <TodoCard
-                todoIndex={todo}
-                addTodo={(todo: Todo) => props.addTodo(todo)}
-                deleteTodo={(id: number) => handleDeleteSelectedTodo(id)}
-                addSelectedTodo={(todo: Todo) => handleAddSelectedTodo(todo)}
-                clearSelectedTodo={() => handleClearSelectedTodo()}
-                disabledButton={handleIsDisabledButton(todo)}
-                selectedTodoId={selectedTodoId}
-              />
-            </Grid>
-          ))}
+    <div>
+      <Grid container direction="row" justify="flex-start" spacing={1}>
+        <Grid item>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={() => props.addTodo({ id: 4, title: "New todo", message: "Dynamically add new todo" })}
+          >
+            Add Todo
+          </Button>
         </Grid>
-      </main>
+        <Grid item>
+          <Button
+            style={{ marginLeft: "4px" }}
+            variant="contained"
+            color="secondary"
+            onClick={() => {
+              props.deleteTodo(TODO_LIST[0].id);
+            }}
+          >
+            Delete Todo
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button
+            style={{ marginLeft: "4px" }}
+            variant="contained"
+            color="secondary"
+            onClick={() => {
+              console.log(props.todo);
+              console.log(props.todos);
+            }}
+          >
+            Get Todo State
+          </Button>
+        </Grid>
+      </Grid>
+      <Grid container direction="row" spacing={1}>
+        {props.todos.todos.map((todo: Todo, index: number) => (
+          <Grid item xs={12} md={4} lg={4} key={index}>
+            <TodoCard
+              todoIndex={todo}
+              addTodo={(todo: Todo) => props.addTodo(todo)}
+              deleteTodo={(id: number) => handleDeleteSelectedTodo(id)}
+              addSelectedTodo={(todo: Todo) => handleAddSelectedTodo(todo)}
+              clearSelectedTodo={() => handleClearSelectedTodo()}
+              disabledButton={handleIsDisabledButton(todo)}
+              selectedTodoId={selectedTodoId}
+            />
+          </Grid>
+        ))}
+      </Grid>
     </div>
   );
 };

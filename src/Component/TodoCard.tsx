@@ -30,10 +30,11 @@ const useStyles = makeStyles({
   },
   title: {
     fontSize: 14,
+    fontWeight: "bold",
   },
   message: {
     marginTop: 12,
-    fontSize: 18,
+    fontSize: 16,
   },
 });
 
