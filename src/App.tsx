@@ -1,5 +1,6 @@
 import React from "react";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import { BrowserRouter as Router, Switch, Route, Link, withRouter, Redirect } from "react-router-dom";
 import "./App.css";
 import Home from "./Container/Home";
 import TodoList from "./Container/TodoList";
@@ -133,7 +134,10 @@ const App = () => {
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <TodoList />
+          <Switch>
+            <Route exact path="/todo-list" component={TodoList}></Route>
+            <Route exact path="/" component={Home}></Route>
+          </Switch>
         </main>
       </div>
     </MuiThemeProvider>
