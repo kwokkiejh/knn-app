@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { TODO_LIST } from "../constants";
 import { RootState } from "../redux/store";
@@ -57,8 +57,17 @@ const TodoList = (props: Props) => {
   const [isEditable, setIsEditable] = useState(true);
   const [selectedTodoId, setSelectedTodoId] = useState(-1);
 
+  useEffect(() => {
+    TODO_LIST.map((todo: Todo, index: number) => props.addTodo(todo));
+  }, []);
+
   const handleIsDisabledButton = (todo: Todo) => {
     return !isEditable && todo !== props.todo.todo;
+  };
+
+  const handleDeleteSelectedTodo = (id: number) => {
+    props.deleteTodo(id);
+    handleClearSelectedTodo();
   };
 
   const handleAddSelectedTodo = (todo: Todo) => {
@@ -110,22 +119,6 @@ const TodoList = (props: Props) => {
       </Drawer>
       <main className={classes.content}>
         <Toolbar />
-        <Box display="flex" justifyContent="flex-start" css={{ width: "100%" }}>
-          {TODO_LIST.map((todo: Todo, index: number) => (
-            <Box p={1} css={{ width: 360 }} key={index}>
-              <TodoCard
-                key={index}
-                todoIndex={todo}
-                addTodo={(todo: Todo) => props.addTodo(todo)}
-                deleteTodo={(id: number) => props.deleteTodo(id)}
-                addSelectedTodo={(todo: Todo) => handleAddSelectedTodo(todo)}
-                clearSelectedTodo={() => handleClearSelectedTodo()}
-                disabledButton={handleIsDisabledButton(todo)}
-                selectedTodoId={selectedTodoId}
-              />
-            </Box>
-          ))}
-        </Box>
         <Button variant="contained" color="secondary" onClick={() => props.addTodo(TODO_LIST[0])}>
           Add Todo
         </Button>
@@ -150,6 +143,22 @@ const TodoList = (props: Props) => {
         >
           Get Todo State
         </Button>
+        <Box display="flex" justifyContent="flex-start" css={{ width: "100%" }}>
+          {props.todos.todos.map((todo: Todo, index: number) => (
+            <Box p={1} css={{ width: 360 }} key={index}>
+              <TodoCard
+                key={index}
+                todoIndex={todo}
+                addTodo={(todo: Todo) => props.addTodo(todo)}
+                deleteTodo={(id: number) => handleDeleteSelectedTodo(id)}
+                addSelectedTodo={(todo: Todo) => handleAddSelectedTodo(todo)}
+                clearSelectedTodo={() => handleClearSelectedTodo()}
+                disabledButton={handleIsDisabledButton(todo)}
+                selectedTodoId={selectedTodoId}
+              />
+            </Box>
+          ))}
+        </Box>
       </main>
     </div>
   );

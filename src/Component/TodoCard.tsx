@@ -7,6 +7,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import SaveOutlinedIcon from "@material-ui/icons/SaveOutlined";
@@ -19,6 +20,9 @@ const useStyles = makeStyles({
     display: "inline-block",
     margin: "0 2px",
     transform: "scale(0.8)",
+  },
+  button: {
+    marginTop: 16,
   },
   id: {
     marginLeft: 4,
@@ -36,7 +40,7 @@ const useStyles = makeStyles({
 interface Props {
   todoIndex: Todo;
   addTodo: typeof addTodo;
-  deleteTodo: typeof deleteTodo;
+  deleteTodo: (id: number) => void;
   addSelectedTodo: (todo: Todo) => void;
   clearSelectedTodo: () => void;
   disabledButton: boolean;
@@ -58,7 +62,19 @@ const TodoCard = (props: Props) => {
           {props.selectedTodoId === props.todoIndex.id ? (
             <>
               <Box>
-                <IconButton aria-label="edit" size="small" onClick={() => {}}>
+                <IconButton
+                  aria-label="edit"
+                  size="small"
+                  color="primary"
+                  onClick={() => {
+                    props.deleteTodo(props.todoIndex.id);
+                  }}
+                >
+                  <DeleteForeverOutlinedIcon fontSize="small" />
+                </IconButton>
+              </Box>
+              <Box>
+                <IconButton aria-label="edit" size="small" color="secondary" onClick={() => {}}>
                   <SaveOutlinedIcon fontSize="small" />
                 </IconButton>
               </Box>
@@ -66,6 +82,7 @@ const TodoCard = (props: Props) => {
                 <IconButton
                   aria-label="edit"
                   size="small"
+                  color="default"
                   onClick={() => {
                     props.clearSelectedTodo();
                   }}
