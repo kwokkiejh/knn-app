@@ -135,8 +135,8 @@ const App = () => {
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <Switch>
-            <Route exact path="/todo-list" component={TodoList}></Route>
-            <Route exact path="/" component={Home}></Route>
+            <Route exact path="/home" component={Home}></Route>
+            <Route exact path="/" component={TodoList}></Route>
           </Switch>
         </main>
       </div>
