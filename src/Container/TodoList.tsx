@@ -7,8 +7,10 @@ import TodoCard from "../Component/TodoCard";
 import { Todo } from "../redux/todos/types";
 
 import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
+import IconButton from "@material-ui/core/IconButton";
+import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
+import Typography from "@material-ui/core/Typography";
 
 const mapStateToProps = (state: RootState) => ({
   todos: state.todos,
@@ -41,6 +43,15 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
+  },
+  todoTitle: {
+    marginTop: 0,
+    color: "#000",
+    fontSize: 32,
+    fontWeight: "bold",
+  },
+  gridContainerTodos: {
+    marginTop: 12,
   },
 }));
 
@@ -76,43 +87,22 @@ const TodoList = (props: Props) => {
 
   return (
     <div>
-      <Grid container direction="row" justify="flex-start" spacing={1}>
+      <Grid container direction="row" justify="space-between" spacing={1}>
         <Grid item>
-          <Button
-            variant="contained"
-            color="secondary"
+          <Typography className={classes.todoTitle}>Todo List</Typography>
+        </Grid>
+        <Grid item>
+          <IconButton
+            aria-label="edit"
+            size="medium"
+            color="primary"
             onClick={() => props.addTodo({ id: 4, title: "New todo", message: "Dynamically add new todo" })}
           >
-            Add Todo
-          </Button>
-        </Grid>
-        <Grid item>
-          <Button
-            style={{ marginLeft: "4px" }}
-            variant="contained"
-            color="secondary"
-            onClick={() => {
-              props.deleteTodo(TODO_LIST[0].id);
-            }}
-          >
-            Delete Todo
-          </Button>
-        </Grid>
-        <Grid item>
-          <Button
-            style={{ marginLeft: "4px" }}
-            variant="contained"
-            color="secondary"
-            onClick={() => {
-              console.log(props.todo);
-              console.log(props.todos);
-            }}
-          >
-            Get Todo State
-          </Button>
+            <AddOutlinedIcon />
+          </IconButton>
         </Grid>
       </Grid>
-      <Grid container direction="row" spacing={1}>
+      <Grid container direction="row" justify="space-between" spacing={1} className={classes.gridContainerTodos}>
         {props.todos.todos.map((todo: Todo, index: number) => (
           <Grid item xs={12} md={4} lg={4} key={index}>
             <TodoCard
