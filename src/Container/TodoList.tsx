@@ -17,6 +17,7 @@ import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Box from "@material-ui/core/Box";
+import Grid from "@material-ui/core/Grid";
 
 const mapStateToProps = (state: RootState) => ({
   todos: state.todos,
@@ -119,7 +120,11 @@ const TodoList = (props: Props) => {
       </Drawer>
       <main className={classes.content}>
         <Toolbar />
-        <Button variant="contained" color="secondary" onClick={() => props.addTodo(TODO_LIST[0])}>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => props.addTodo({ id: 4, title: "New todo", message: "Dynamically add new todo" })}
+        >
           Add Todo
         </Button>
         <Button
@@ -143,9 +148,9 @@ const TodoList = (props: Props) => {
         >
           Get Todo State
         </Button>
-        <Box display="flex" justifyContent="flex-start" css={{ width: "100%" }}>
+        <Grid container spacing={3}>
           {props.todos.todos.map((todo: Todo, index: number) => (
-            <Box p={1} css={{ width: 360 }} key={index}>
+            <Grid item xs={4} key={index}>
               <TodoCard
                 key={index}
                 todoIndex={todo}
@@ -156,9 +161,9 @@ const TodoList = (props: Props) => {
                 disabledButton={handleIsDisabledButton(todo)}
                 selectedTodoId={selectedTodoId}
               />
-            </Box>
+            </Grid>
           ))}
-        </Box>
+        </Grid>
       </main>
     </div>
   );
