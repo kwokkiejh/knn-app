@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { BrowserRouter as Router, Switch, Route, Link, withRouter, Redirect } from "react-router-dom";
 import "./App.css";
 import Home from "./Container/Home";
 import TodoList from "./Container/TodoList";
+import Sidebar from "./Container/Sidebar";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
@@ -91,8 +92,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const App = () => {
+const App = (props: any) => {
   const classes = useStyles();
+  useEffect(() => {
+    console.log(props);
+  }, []);
 
   return (
     <MuiThemeProvider theme={themeLight}>
@@ -116,27 +120,24 @@ const App = () => {
           <Toolbar />
           <div className={classes.drawerContainer}>
             <List>
-              {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-                <ListItem button key={text}>
-                  <ListItemText primary={text} />
-                </ListItem>
-              ))}
-            </List>
-            <Divider />
-            <List>
-              {["All mail", "Trash", "Spam"].map((text, index) => (
-                <ListItem button key={text}>
-                  <ListItemText primary={text} />
-                </ListItem>
-              ))}
+              <ListItem button>
+                <ListItemText primary={"Home"} />
+              </ListItem>
+              <ListItem button>
+                <ListItemText primary={"Todo List"} />
+              </ListItem>
             </List>
           </div>
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <Switch>
-            <Route exact path="/home" component={Home}></Route>
-            <Route exact path="/" component={TodoList}></Route>
+            <Route exact path="/home">
+              <Home />
+            </Route>
+            <Route exact path="/">
+              <TodoList />
+            </Route>
           </Switch>
         </main>
       </div>
@@ -144,4 +145,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default withRouter(App);
