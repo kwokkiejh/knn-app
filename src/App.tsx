@@ -7,18 +7,25 @@ import {
   Link,
   withRouter,
   Redirect,
+<<<<<<< HEAD
   RouteComponentProps,
+=======
+>>>>>>> master
 } from "react-router-dom";
 import "./App.css";
 import Home from "./Container/Home";
 import TodoList from "./Container/TodoList";
 import Sidebar from "./Component/Sidebar";
 import { makeStyles } from "@material-ui/core/styles";
+<<<<<<< HEAD
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import Avatar from "@material-ui/core/Avatar";
+=======
+import NavBar from "./Component/NavBar";
+>>>>>>> master
 
 const themeLight = createMuiTheme({
   palette: {
