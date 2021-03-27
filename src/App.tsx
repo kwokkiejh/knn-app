@@ -1,17 +1,21 @@
 import React, { useEffect } from "react";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import { BrowserRouter as Router, Switch, Route, Link, withRouter, Redirect } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  withRouter,
+  Redirect,
+  RouteComponentProps,
+} from "react-router-dom";
 import "./App.css";
 import Home from "./Container/Home";
 import TodoList from "./Container/TodoList";
-import Sidebar from "./Container/Sidebar";
+import Sidebar from "./Component/Sidebar";
 import { makeStyles } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import Avatar from "@material-ui/core/Avatar";
@@ -69,16 +73,6 @@ const useStyles = makeStyles((theme) => ({
   },
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-  },
-  drawerPaper: {
-    width: drawerWidth,
-  },
-  drawerContainer: {
-    overflow: "auto",
-  },
   content2: {
     display: "flex",
     justifyContent: "flex-start",
@@ -92,11 +86,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const App = (props: any) => {
+const App = (props: RouteComponentProps) => {
   const classes = useStyles();
+  const { match, location, history } = props;
+
   useEffect(() => {
     console.log(props);
+    console.log("you are now at " + location.pathname);
+    console.log();
   }, []);
+
+  const nav = () => {
+    history.push(location.pathname);
+    console.log(history);
+  };
 
   return (
     <MuiThemeProvider theme={themeLight}>
@@ -110,25 +113,7 @@ const App = (props: any) => {
           </Toolbar>
           <Divider />
         </AppBar>
-        <Drawer
-          className={classes.drawer}
-          variant="permanent"
-          classes={{
-            paper: classes.drawerPaper,
-          }}
-        >
-          <Toolbar />
-          <div className={classes.drawerContainer}>
-            <List>
-              <ListItem button>
-                <ListItemText primary={"Home"} />
-              </ListItem>
-              <ListItem button>
-                <ListItemText primary={"Todo List"} />
-              </ListItem>
-            </List>
-          </div>
-        </Drawer>
+        <Sidebar />
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <Switch>
